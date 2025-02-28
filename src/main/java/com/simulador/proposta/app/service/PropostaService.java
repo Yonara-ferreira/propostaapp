@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.simulador.proposta.app.repository.PropostaRepository;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class PropostaService {
@@ -25,4 +27,7 @@ public class PropostaService {
     }
 
 
+    public List<PropostaResponseDto> listarPropostas() {
+       return  PropostaMapper.INSTANCE.convertListEntityDto(repository.findAll());
+    }
 }

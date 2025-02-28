@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.text.NumberFormat;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PropostaMapper {
@@ -33,6 +34,8 @@ public interface PropostaMapper {
     @Mapping(target = "valorSolicitadoFmt", expression = "java(setValorSolicitadoFmt(proposta))")
     PropostaResponseDto convertEntityToDto(Proposta proposta);
 
+    List<PropostaResponseDto> convertListEntityDto(Iterable<Proposta> propostas);
+// pegar a localizacao que estamos e devolver um valor
     default String setValorSolicitadoFmt(Proposta proposta) {
         return NumberFormat.getCurrencyInstance().format(proposta.getValorSolicitado());
     }
