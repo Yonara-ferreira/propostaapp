@@ -18,11 +18,19 @@ public class PropostaService {
     @Autowired
     private PropostaRepository repository;
 
+    @Autowired
+    private NotificacaoService notificacaoService;
+
     public PropostaResponseDto criarProposta (PropostaRequestDto requestDto) {
         Proposta proposta = PropostaMapper.INSTANCE.convertDtoToProposta(requestDto);
+        //cadastro feito com sucesso!
         repository.save(proposta);
 
-        return PropostaMapper.INSTANCE.convertEntityToDto(proposta);
+        PropostaResponseDto response = PropostaMapper.INSTANCE.convertEntityToDto(proposta);
+        // Envia notificaçao para exchange
+        notificacaoService.notificar(response,"proposta-pendente.ex");
+
+        return response;
 
     }
 
